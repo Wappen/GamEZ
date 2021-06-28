@@ -34,7 +34,7 @@ public class Window extends PApplet {
     @Override
     public void setup() {
         game.start();
-        frameRate(10);
+        frameRate(60);
     }
 
     @Override

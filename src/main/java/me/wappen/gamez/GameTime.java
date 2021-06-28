@@ -1,7 +1,7 @@
 package me.wappen.gamez;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author LenzK
@@ -9,21 +9,28 @@ import java.time.LocalDateTime;
  */
 
 public class GameTime {
-    private final LocalDateTime startTime = LocalDateTime.now();
-    private LocalDateTime frameStartTime = LocalDateTime.now();
-    private float deltaTime = 1f;
+    private static final float MAX_DELTA = 0.1f;
+    private final Instant startTime;
+    private Instant frameStartTime;
+    private float deltaTime;
 
-    public void update() {
-        Duration dur = Duration.between(LocalDateTime.now(), frameStartTime);
-        deltaTime = 1_000_000_000f / dur.getNano() / 60f;
-        frameStartTime = LocalDateTime.now();
+    public GameTime() {
+        startTime = Instant.now();
+        frameStartTime = Instant.now();
+        deltaTime = 0;
     }
 
-    public LocalDateTime getStartTime() {
+    public void update() {
+        Duration dur = Duration.between(frameStartTime, Instant.now());
+        deltaTime = Float.min(dur.toMillis() / 1_000f, MAX_DELTA);
+        frameStartTime = Instant.now();
+    }
+
+    public Instant getStartTime() {
         return startTime;
     }
 
-    public LocalDateTime getFrameStartTime() {
+    public Instant getFrameStartTime() {
         return frameStartTime;
     }
 

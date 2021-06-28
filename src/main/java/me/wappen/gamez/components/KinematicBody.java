@@ -19,10 +19,10 @@ public class KinematicBody extends Component {
         vel.add(0, gravity * time.getDeltaTime());
 
         // Apply drag
-        vel.mult(1 - time.getDeltaTime() * drag);
+        vel.mult(1 - drag * time.getDeltaTime());
 
         // Apply velocity
-        getNode().getLocalPos().add(vel);
+        getNode().getLocalPos().add(PVector.mult(vel, time.getDeltaTime() * 60f, null));
     }
 
     public PVector getVel() {
