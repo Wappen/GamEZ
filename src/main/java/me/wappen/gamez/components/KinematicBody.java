@@ -1,7 +1,11 @@
 package me.wappen.gamez.components;
 
+import javafx.util.Pair;
 import me.wappen.gamez.GameTime;
+import me.wappen.gamez.components.colliders.Collider;
 import processing.core.PVector;
+
+import java.util.List;
 
 /**
  * @author LenzK
@@ -14,7 +18,7 @@ public class KinematicBody extends Component {
     private float drag = 0.25f;
 
     @Override
-    public void onTick(GameTime time) {
+    public void onPhysicsTick(GameTime time) {
         // Apply gravity
         vel.add(0, gravity * time.getDeltaTime());
 
@@ -22,7 +26,7 @@ public class KinematicBody extends Component {
         vel.mult(1 - drag * time.getDeltaTime());
 
         // Apply velocity
-        getNode().getLocalPos().add(PVector.mult(vel, time.getDeltaTime() * 60f, null));
+        getNode().getLocalPos().add(PVector.mult(vel, time.getDeltaTime() * 50f));
     }
 
     public PVector getVel() {
@@ -47,5 +51,37 @@ public class KinematicBody extends Component {
 
     public void setDrag(float drag) {
         this.drag = drag;
+    }
+
+    public static void collide(Collider c1, Collider c2) {
+        KinematicBody kb1 = c1.getEntity().getComponent(KinematicBody.class);
+        KinematicBody kb2 = c2.getEntity().getComponent(KinematicBody.class);
+
+        PVector relVel;
+        if (kb1 == null && kb2 == null)
+            relVel = new PVector();
+        else if (kb1 == null)
+            relVel = kb2.getVel();
+        else if (kb2 == null)
+            relVel = kb1.getVel();
+        else
+            relVel = PVector.sub(kb1.getVel(), kb2.getVel());
+
+        PVector pos1 = c1.getNode().getPos().copy();
+        pos1.z = 0;
+        PVector pos2 = c2.getNode().getPos().copy();
+        pos2.z = 0;
+
+        PVector normal = PVector.sub(pos1, pos2).normalize();
+        float sepVel = PVector.dot(relVel, normal);
+        PVector sepVelVec1 = PVector.mult(normal, -sepVel);
+        PVector sepVelVec2 = PVector.mult(normal, sepVel);
+
+        System.out.println(kb1.vel.toString() + "  " + kb2.vel.toString());
+
+        if (kb1 != null)
+            kb1.vel.add(sepVelVec1);
+        if (kb2 != null)
+            kb2.vel.add(sepVelVec2);
     }
 }

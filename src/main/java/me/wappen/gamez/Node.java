@@ -31,6 +31,12 @@ public class Node {
             child.tick(time);
     }
 
+    public void physicsTick(GameTime time) {
+        entity.physicsTick(time);
+        for (Node child : children)
+            child.physicsTick(time);
+    }
+
     public void spawn(Game game, Node parent) {
         this.game = game;
         this.parent = parent;

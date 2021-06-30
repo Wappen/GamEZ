@@ -4,7 +4,7 @@ import me.wappen.gamez.Entity;
 import me.wappen.gamez.Game;
 import me.wappen.gamez.GameTime;
 import me.wappen.gamez.Node;
-import processing.core.PShape;
+import me.wappen.gamez.components.colliders.Collider;
 
 /**
  * @author LenzK
@@ -26,11 +26,10 @@ public abstract class Component {
     }
 
     public void onTick(GameTime time) {}
+    public void onPhysicsTick(GameTime time) {}
     public void onSpawn() {}
     public void onDelete() {}
-    public PShape getShape() {
-        return null;
-    }
+    public void onCollide(Collider other) {}
 
     public Game getGame() {
         return game;

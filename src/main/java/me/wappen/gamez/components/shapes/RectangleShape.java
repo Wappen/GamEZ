@@ -10,7 +10,7 @@ import processing.core.PVector;
  * @since 27.06.2021
  */
 
-public class RectangleShape extends Component {
+public class RectangleShape extends Shape {
     PVector size;
     int col;
     PShape rect;

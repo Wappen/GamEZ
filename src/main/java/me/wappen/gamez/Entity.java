@@ -1,6 +1,8 @@
 package me.wappen.gamez;
 
 import me.wappen.gamez.components.Component;
+import me.wappen.gamez.components.colliders.Collider;
+import me.wappen.gamez.components.shapes.Shape;
 import processing.core.PShape;
 
 import java.util.ArrayList;
@@ -70,6 +72,12 @@ public class Entity {
         }
     }
 
+    public void physicsTick(GameTime time) {
+        for (Component comp : components) {
+            comp.onPhysicsTick(time);
+        }
+    }
+
     public void spawn(Node node) {
         this.game = node.getGame();
         this.node = node;
@@ -77,6 +85,12 @@ public class Entity {
         for (Component comp : components) {
             comp.spawn(node);
             comp.onSpawn();
+        }
+    }
+
+    public void collide(Collider other) {
+        for (Component comp : components) {
+            comp.onCollide(other);
         }
     }
 
@@ -94,9 +108,10 @@ public class Entity {
         List<PShape> shapes = new ArrayList<>();
 
         for (Component comp : components) {
-            PShape sh = comp.getShape();
-            if (sh != null)
+            if (comp instanceof Shape) {
+                PShape sh = ((Shape)comp).getShape();
                 shapes.add(sh);
+            }
         }
 
         return shapes;
