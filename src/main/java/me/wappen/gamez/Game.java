@@ -1,6 +1,5 @@
 package me.wappen.gamez;
 
-import me.wappen.gamez.components.KinematicBody;
 import me.wappen.gamez.components.colliders.Collider;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -62,11 +61,11 @@ public class Game {
                 Collider c1 = colliders.get(i);
                 Collider c2 = colliders.get(j);
 
-                if (Collider.checkCollision(c1, c2)) {
-                    KinematicBody.collide(c1, c2);
+                Collision collision = Collision.checkCollision(c1, c2);
 
-                    c1.getEntity().collide(c2);
-                    c2.getEntity().collide(c1);
+                if (collision != null) {
+                    c1.getEntity().collide(collision);
+                    c2.getEntity().collide(collision.swapped());
                 }
             }
         }

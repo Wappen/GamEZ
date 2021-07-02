@@ -57,10 +57,8 @@ public class Rect {
         return new Rect(PVector.add(pos, offset), size);
     }
 
-    public static boolean intersect(Rect r1, Rect r2) {
-        return !(r2.getLeft() > r1.getRight() ||
-                r2.getRight() < r1.getLeft() ||
-                r2.getTop() > r1.getBottom() ||
-                r2.getBottom() < r1.getTop());
+    public static boolean overlap(Rect r1, Rect r2) {
+        return !(r1.getRight() < r2.getLeft()) && !(r1.getLeft() > r2.getRight() &&
+                r1.getTop() < r2.getBottom() && r1.getBottom() > r1.getTop());
     }
 }

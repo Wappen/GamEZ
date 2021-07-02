@@ -1,10 +1,6 @@
 package me.wappen.gamez.components;
 
-import me.wappen.gamez.Entity;
-import me.wappen.gamez.Game;
-import me.wappen.gamez.GameTime;
-import me.wappen.gamez.Node;
-import me.wappen.gamez.components.colliders.Collider;
+import me.wappen.gamez.*;
 
 /**
  * @author LenzK
@@ -29,7 +25,7 @@ public abstract class Component {
     public void onPhysicsTick(GameTime time) {}
     public void onSpawn() {}
     public void onDelete() {}
-    public void onCollide(Collider other) {}
+    public void onCollide(Collision collision) {}
 
     public Game getGame() {
         return game;

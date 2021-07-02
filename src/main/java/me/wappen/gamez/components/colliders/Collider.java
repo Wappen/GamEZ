@@ -2,6 +2,7 @@ package me.wappen.gamez.components.colliders;
 
 import me.wappen.gamez.Rect;
 import me.wappen.gamez.components.Component;
+import processing.core.PVector;
 
 /**
  * @author LenzK
@@ -29,12 +30,16 @@ public abstract class Collider extends Component {
         return bounds;
     }
 
-    public static boolean checkCollision(Collider c1, Collider c2) {
-        if (Rect.intersect(c1.getBounds().offset(c1.getNode().getPos()), c2.getBounds().offset(c2.getNode().getPos()))) {
-            return c1.checkCollision(c2);
+    public PVector getPos() {
+        return new PVector(getNode().getPos().x, getNode().getPos().y);
+    }
+
+    public static boolean doCollide(Collider c1, Collider c2) {
+        if (Rect.overlap(c1.getBounds().offset(c1.getPos()), c2.getBounds().offset(c2.getPos()))) {
+            return c1.doCollide(c2);
         }
         return false;
     }
 
-    protected abstract boolean checkCollision(Collider other);
+    protected abstract boolean doCollide(Collider other);
 }

@@ -1,5 +1,7 @@
 package me.wappen.gamez;
 
+import me.wappen.gamez.components.colliders.CircleCollider;
+import me.wappen.gamez.components.colliders.Collider;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.event.KeyEvent;
@@ -33,9 +35,9 @@ public class Window extends PApplet {
 
     @Override
     public void setup() {
-        game.start();
         frameRate(60);
         game.init();
+        game.start();
     }
 
     @Override
@@ -52,6 +54,13 @@ public class Window extends PApplet {
                     shape(shape, node.getPos().x, node.getPos().y);
                 }
             }
+
+            /*Collider c = node.getEntity().getComponent(CircleCollider.class);
+            if (c != null) {
+                Rect b = c.getBounds().offset(c.getPos());
+                fill(255, 255, 255, 50);
+                rect(b.getPos().x, b.getPos().y, b.getSize().x, b.getSize().y);
+            }*/
         }
 
         game.getView().revert(this);

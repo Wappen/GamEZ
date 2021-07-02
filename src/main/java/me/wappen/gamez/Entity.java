@@ -1,7 +1,6 @@
 package me.wappen.gamez;
 
 import me.wappen.gamez.components.Component;
-import me.wappen.gamez.components.colliders.Collider;
 import me.wappen.gamez.components.shapes.Shape;
 import processing.core.PShape;
 
@@ -88,9 +87,9 @@ public class Entity {
         }
     }
 
-    public void collide(Collider other) {
+    public void collide(Collision collision) {
         for (Component comp : components) {
-            comp.onCollide(other);
+            comp.onCollide(collision);
         }
     }
 
